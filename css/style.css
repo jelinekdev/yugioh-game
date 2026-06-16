@@ -70,3 +70,6 @@ button:hover {
   background-color: var(--color-primary);
   color: var(--color-bg);
 }
+.hidden {
+  display: none !important;
+}

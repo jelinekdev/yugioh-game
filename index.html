@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://images.ygoprodeck.com; script-src 'self';">
-  <title>Yu-Gi-Oh!</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://images.ygoprodeck.com; script-src 'self'; connect-src https://db.ygoprodeck.com;">  <title>Yu-Gi-Oh!</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -19,9 +18,24 @@
       </nav>
     </div>
 
-    <div id="screen-deck-builder" class="hidden">
-      <h2>Deck Builder</h2>
-      <button data-target="screen-menu">Zurück</button>
+<div id="screen-deck-builder" class="hidden">
+      <div class="deck-builder-layout">
+
+        <aside class="card-search">
+          <h2>Karten suchen</h2>
+          <input type="text" id="search-input" placeholder="Kartenname eingeben..." autocomplete="off">
+          <button id="search-button">Suchen</button>
+          <div id="search-results"></div>
+        </aside>
+
+        <main class="deck-view">
+          <h2>Mein Deck (<span id="deck-count">0</span>/60)</h2>
+          <button id="save-deck-button">Deck speichern</button>
+          <button data-target="screen-menu">Zurueck</button>
+          <div id="deck-list"></div>
+        </main>
+
+      </div>
     </div>
 
     <div id="screen-play" class="hidden">
@@ -32,5 +46,6 @@
   </div>
   <script src="js/api.js"></script>
   <script src="js/ui.js"></script>
+  <script src="js/DeckBuilder.js"></script>
 </body>
 </html>
