@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://images.ygoprodeck.com; script-src 'self';">
+  <title>Yu-Gi-Oh!</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <div id="app">
+
+    <div id="screen-menu">
+      <h1>Yu-Gi-Oh!</h1>
+      <nav>
+        <button data-target="screen-deck-builder">Deck Builder</button>
+        <button data-target="screen-play">Spielen</button>
+      </nav>
+    </div>
+
+    <div id="screen-deck-builder" class="hidden">
+      <h2>Deck Builder</h2>
+      <button data-target="screen-menu">Zurueck</button>
+    </div>
+
+    <div id="screen-play" class="hidden">
+      <h2>Spielen</h2>
+      <button data-target="screen-menu">Zurueck</button>
+    </div>
+
+  </div>
+
+  <script src="js/ui.js"></script>
+</body>
+</html>
