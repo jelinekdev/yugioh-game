@@ -1,0 +1,121 @@
+.deck-builder-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  height: 100vh;
+  padding: 1rem;
+}
+
+.card-search {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+}
+
+.card-search h2 {
+  color: var(--color-primary);
+}
+
+#search-input {
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--border-radius);
+  padding: 0.75rem;
+  font-size: 1rem;
+  width: 100%;
+}
+
+#search-input:focus {
+  outline: none;
+  border-color: var(--color-primary-hover);
+}
+
+#search-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 0.75rem;
+  overflow-y: auto;
+}
+
+.card-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius);
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.card-result:hover {
+  transform: scale(1.05);
+}
+
+.card-result img {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.card-result p {
+  font-size: 0.65rem;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.card-result button {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+.deck-view {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+}
+
+.deck-view h2 {
+  color: var(--color-primary);
+}
+
+.deck-view > div {
+  display: flex;
+  gap: 0.5rem;
+}
+
+#deck-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 0.5rem;
+  overflow-y: auto;
+}
+
+.deck-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  background-color: var(--color-surface);
+  border-radius: var(--border-radius);
+  padding: 0.4rem;
+}
+
+.deck-card img {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.deck-card p {
+  font-size: 0.6rem;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.deck-card button {
+  padding: 0.2rem 0.6rem;
+  font-size: 0.8rem;
+}
