@@ -37,6 +37,29 @@ async function handleSearch() {
   }
 }
 
+function showCardDetail(card) {
+  const preview = document.getElementById('card-preview');
+  const imageUrl = card.card_images?.[0]?.image_url;
+
+  preview.innerHTML = '';
+
+  if (imageUrl) {
+    const img = document.createElement('img');
+    img.src = imageUrl;
+    img.alt = card.name;
+    preview.appendChild(img);
+  }
+
+  document.getElementById('card-info-name').textContent = card.name;
+  document.getElementById('card-info-type').textContent = `${card.type} / ${card.race}`;
+
+  const atkDef = card.atk !== undefined
+    ? `ATK: ${card.atk} / DEF: ${card.def ?? '-'}`
+    : '';
+  document.getElementById('card-info-atk-def').textContent = atkDef;
+  document.getElementById('card-info-desc').textContent = card.desc;
+}
+
 function renderSearchResults(cards) {
   const container = document.getElementById('search-results');
   container.innerHTML = '';
@@ -57,16 +80,13 @@ function renderSearchResults(cards) {
     img.src = imageUrl;
     img.alt = card.name;
     img.loading = 'lazy';
-
-    const name = document.createElement('p');
-    name.textContent = card.name;
+    img.addEventListener('click', () => showCardDetail(card));
 
     const addButton = document.createElement('button');
     addButton.textContent = '+';
     addButton.addEventListener('click', () => addCardToDeck(card));
 
     cardEl.appendChild(img);
-    cardEl.appendChild(name);
     cardEl.appendChild(addButton);
     container.appendChild(cardEl);
   });
@@ -102,7 +122,7 @@ function renderDeck() {
   container.innerHTML = '';
   countEl.textContent = deck.length;
 
-  deck.forEach((card, index) => {
+  deck.forEach((card) => {
     const imageUrl = card.card_images?.[0]?.image_url_small;
 
     const cardEl = document.createElement('div');
@@ -112,16 +132,13 @@ function renderDeck() {
     img.src = imageUrl;
     img.alt = card.name;
     img.loading = 'lazy';
-
-    const name = document.createElement('p');
-    name.textContent = card.name;
+    img.addEventListener('click', () => showCardDetail(card));
 
     const removeButton = document.createElement('button');
     removeButton.textContent = '-';
     removeButton.addEventListener('click', () => removeCardFromDeck(card.id));
 
     cardEl.appendChild(img);
-    cardEl.appendChild(name);
     cardEl.appendChild(removeButton);
     container.appendChild(cardEl);
   });

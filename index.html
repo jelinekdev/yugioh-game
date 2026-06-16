@@ -23,19 +23,33 @@
 <div id="screen-deck-builder" class="hidden">
       <div class="deck-builder-layout">
 
+        <aside class="card-detail">
+          <div id="card-preview">
+            <p class="card-preview-placeholder">Karte auswaehlen</p>
+          </div>
+          <div id="card-info">
+            <h3 id="card-info-name"></h3>
+            <p id="card-info-type"></p>
+            <p id="card-info-atk-def"></p>
+            <p id="card-info-desc"></p>
+          </div>
+          <div class="deck-actions">
+            <button id="save-deck-button">Deck speichern</button>
+            <button data-target="screen-menu">Zurueck</button>
+          </div>
+        </aside>
+
+        <main class="deck-view">
+          <h2>Main Deck (<span id="deck-count">0</span>/60)</h2>
+          <div id="deck-list"></div>
+        </main>
+
         <aside class="card-search">
           <h2>Karten suchen</h2>
           <input type="text" id="search-input" placeholder="Kartenname eingeben..." autocomplete="off">
           <button id="search-button">Suchen</button>
           <div id="search-results"></div>
         </aside>
-
-        <main class="deck-view">
-          <h2>Mein Deck (<span id="deck-count">0</span>/60)</h2>
-          <button id="save-deck-button">Deck speichern</button>
-          <button data-target="screen-menu">Zurueck</button>
-          <div id="deck-list"></div>
-        </main>
 
       </div>
     </div>
