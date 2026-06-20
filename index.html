@@ -6,7 +6,8 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://images.ygoprodeck.com; script-src 'self'; connect-src https://db.ygoprodeck.com;">  <title>Yu-Gi-Oh!</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/menu.css">
-  <link rel="stylesheet" href="css/DeckBuilder.css">
+  <link rel="stylesheet" href="css/deckBuilder.css">
+  <link rel="stylesheet" href="css/opponentSelect.css">
 </head>
 <body>
 
@@ -55,8 +56,31 @@
     </div>
 
     <div id="screen-play" class="hidden">
-      <h2>Spielen</h2>
-      <button data-target="screen-menu">Zurück</button>
+      <div class="opponent-select">
+        <h2>Gegner waehlen</h2>
+        <div class="opponent-list">
+
+          <div class="opponent-card" data-difficulty="easy">
+            <h3>Anfaenger</h3>
+            <p>Schwierigkeit: Leicht</p>
+            <button data-difficulty="easy">Herausfordern</button>
+          </div>
+
+          <div class="opponent-card" data-difficulty="medium">
+            <h3>Fortgeschrittener</h3>
+            <p>Schwierigkeit: Mittel</p>
+            <button data-difficulty="medium">Herausfordern</button>
+          </div>
+
+          <div class="opponent-card" data-difficulty="hard">
+            <h3>Meister</h3>
+            <p>Schwierigkeit: Schwer</p>
+            <button data-difficulty="hard">Herausfordern</button>
+          </div>
+
+        </div>
+        <button data-target="screen-menu">Zurueck</button>
+      </div>
     </div>
 
   </div>
