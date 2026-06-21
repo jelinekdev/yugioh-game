@@ -63,6 +63,7 @@ async function startDuel(difficulty) {
     document.getElementById('duel-board-view').classList.remove('hidden');
 
     renderHands();
+    renderDeckZones();
 
     const starterName = gameState.currentTurn === 'player' ? 'Du beginnst.' : 'Der Gegner beginnt.';
     duelLog.textContent = `Duell gegen ${OPPONENTS[difficulty].name} gestartet. ${starterName}`;
@@ -108,6 +109,7 @@ function handleDrawPhase() {
 
   activeState.hand.push(...drawn);
   renderHands();
+  renderDeckZones();
 }
 
 function endTurn() {
@@ -195,6 +197,29 @@ function renderOpponentHand() {
     cardEl.appendChild(backImg);
     container.appendChild(cardEl);
   });
+}
+
+function renderDeckZones() {
+  const playerDeckZone = document.querySelector('[data-zone="player-deck"]');
+  const opponentDeckZone = document.querySelector('[data-zone="opponent-deck"]');
+
+  renderDeckZone(playerDeckZone, gameState.field.player.deck.length);
+  renderDeckZone(opponentDeckZone, gameState.field.opponent.deck.length);
+}
+
+function renderDeckZone(zoneEl, cardCount) {
+  zoneEl.innerHTML = '';
+
+  if (cardCount === 0) {
+    return;
+  }
+
+  const img = document.createElement('img');
+  img.src = 'assets/back_high.jpg';
+  img.alt = 'Deck';
+  img.className = 'deck-stack-image';
+
+  zoneEl.appendChild(img);
 }
 
 function leaveDuel() {
