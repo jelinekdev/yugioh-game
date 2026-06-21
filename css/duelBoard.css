@@ -147,3 +147,15 @@
   padding: 0.35rem 0.9rem;
   font-size: 0.8rem;
 }
+
+.phase-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  min-height: 2.2rem;
+}
+
+.phase-actions button {
+  padding: 0.3rem 0.8rem;
+  font-size: 0.7rem;
+}
