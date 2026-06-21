@@ -1,0 +1,110 @@
+.duel-board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.life-points {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--border-radius);
+  padding: 0.6rem 1rem;
+  white-space: nowrap;
+}
+
+.life-points-opponent {
+  align-self: flex-end;
+  margin-right: calc((100% - 900px) / 2);
+}
+
+.life-points-player {
+  align-self: flex-start;
+  margin-left: calc((100% - 900px) / 2);
+}
+
+.life-label {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+}
+
+#opponent-life,
+#player-life {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+.board-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.zone {
+  width: 110px;
+  height: 160px;
+  border: 1px dashed var(--color-text-muted);
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.monster-zone {
+  border-color: #b85c5c;
+}
+
+.spell-trap-zone {
+  border-color: #5c8bb8;
+}
+
+.deck-zone,
+.graveyard-zone,
+.extra-deck-zone,
+.banished-zone {
+  border: 1px solid var(--color-primary);
+  background-color: var(--color-surface);
+}
+
+.phase-bar {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  padding: 0.3rem 0;
+}
+
+.phase-button {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-primary);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: var(--color-text-muted);
+  cursor: default;
+}
+
+.phase-button.active {
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+}
+
+.hand-row {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  min-height: 130px;
+}
+
+.duel-log {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-align: center;
+  min-height: 1.2rem;
+}
+
+#leave-duel-button {
+  margin-top: 0.5rem;
+}
