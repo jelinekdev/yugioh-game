@@ -1,4 +1,11 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    await loadScreens();
+  } catch (error) {
+    document.getElementById('app').textContent = 'Fehler beim Laden der Seite.';
+    return;
+  }
+
   initDeckBuilder();
   initDuelScreen();
 

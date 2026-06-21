@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://images.ygoprodeck.com; script-src 'self'; connect-src https://db.ygoprodeck.com;">
-  <title>Yu-Gi-Oh!</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://images.ygoprodeck.com; script-src 'self'; connect-src 'self' https://db.ygoprodeck.com;">  <title>Yu-Gi-Oh!</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/menu.css">
   <link rel="stylesheet" href="css/deckBuilder.css">
@@ -13,152 +12,9 @@
 </head>
 <body>
 
-  <div id="app">
+  <div id="app"></div>
 
-    <div id="screen-menu">
-      <h1>Yu-Gi-Oh!</h1>
-      <nav>
-        <button data-target="screen-deck-builder">Deck Builder</button>
-        <button data-target="screen-play">Spielen</button>
-      </nav>
-    </div>
-
-    <div id="screen-deck-builder" class="hidden">
-      <div class="deck-builder-layout">
-
-        <aside class="card-detail">
-          <div id="card-preview">
-            <p class="card-preview-placeholder">Karte auswaehlen</p>
-          </div>
-          <div id="card-info">
-            <h3 id="card-info-name"></h3>
-            <p id="card-info-type"></p>
-            <p id="card-info-atk-def"></p>
-            <p id="card-info-desc"></p>
-          </div>
-          <div class="deck-actions">
-            <button id="save-deck-button">Deck speichern</button>
-            <button data-target="screen-menu">Zurueck</button>
-          </div>
-        </aside>
-
-        <main class="deck-view">
-          <h2>Main Deck (<span id="deck-count">0</span>/60)</h2>
-          <div id="deck-list"></div>
-        </main>
-
-        <aside class="card-search">
-          <h2>Karten suchen</h2>
-          <input type="text" id="search-input" placeholder="Kartenname eingeben..." autocomplete="off">
-          <button id="search-button">Suchen</button>
-          <div id="search-results"></div>
-        </aside>
-
-      </div>
-    </div>
-
-    <div id="screen-play" class="hidden">
-
-      <div id="opponent-select-view" class="opponent-select">
-        <h2>Gegner waehlen</h2>
-        <div class="opponent-list">
-
-          <div class="opponent-card">
-            <h3>Anfaenger</h3>
-            <p>Schwierigkeit: Leicht</p>
-            <button class="challenge-button" data-difficulty="easy">Herausfordern</button>
-          </div>
-
-          <div class="opponent-card">
-            <h3>Fortgeschrittener</h3>
-            <p>Schwierigkeit: Mittel</p>
-            <button class="challenge-button" data-difficulty="medium">Herausfordern</button>
-          </div>
-
-          <div class="opponent-card">
-            <h3>Meister</h3>
-            <p>Schwierigkeit: Schwer</p>
-            <button class="challenge-button" data-difficulty="hard">Herausfordern</button>
-          </div>
-
-        </div>
-        <button data-target="screen-menu">Zurueck</button>
-      </div>
-
-<div id="duel-board-view" class="duel-board hidden">
-
-        <div class="life-points life-points-opponent">
-          <span class="life-label">Gegner</span>
-          <span id="opponent-life">8000</span>
-        </div>
-
-        <div id="opponent-hand" class="hand-row opponent-hand"></div>
-
-        <div class="board-row">
-          <div class="zone deck-zone" data-zone="opponent-deck"></div>
-          <div class="zone spell-trap-zone" data-zone="opponent-spell-0"></div>
-          <div class="zone spell-trap-zone" data-zone="opponent-spell-1"></div>
-          <div class="zone spell-trap-zone" data-zone="opponent-spell-2"></div>
-          <div class="zone spell-trap-zone" data-zone="opponent-spell-3"></div>
-          <div class="zone spell-trap-zone" data-zone="opponent-spell-4"></div>
-          <div class="zone extra-deck-zone" data-zone="opponent-extra"></div>
-        </div>
-
-        <div class="board-row">
-          <div class="zone graveyard-zone" data-zone="opponent-graveyard"></div>
-          <div class="zone monster-zone" data-zone="opponent-monster-0"></div>
-          <div class="zone monster-zone" data-zone="opponent-monster-1"></div>
-          <div class="zone monster-zone" data-zone="opponent-monster-2"></div>
-          <div class="zone monster-zone" data-zone="opponent-monster-3"></div>
-          <div class="zone monster-zone" data-zone="opponent-monster-4"></div>
-          <div class="zone banished-zone" data-zone="opponent-banished"></div>
-        </div>
-
-        <div class="phase-bar">
-          <span class="phase-button" data-phase="draw">DP</span>
-          <span class="phase-button" data-phase="standby">SP</span>
-          <span class="phase-button" data-phase="main1">MP1</span>
-          <span class="phase-button" data-phase="battle">BP</span>
-          <span class="phase-button" data-phase="main2">MP2</span>
-          <span class="phase-button" data-phase="end">EP</span>
-        </div>
-
-        <div class="board-row">
-          <div class="zone banished-zone" data-zone="player-banished"></div>
-          <div class="zone monster-zone" data-zone="player-monster-0"></div>
-          <div class="zone monster-zone" data-zone="player-monster-1"></div>
-          <div class="zone monster-zone" data-zone="player-monster-2"></div>
-          <div class="zone monster-zone" data-zone="player-monster-3"></div>
-          <div class="zone monster-zone" data-zone="player-monster-4"></div>
-          <div class="zone graveyard-zone" data-zone="player-graveyard"></div>
-        </div>
-
-        <div class="board-row">
-          <div class="zone extra-deck-zone" data-zone="player-extra"></div>
-          <div class="zone spell-trap-zone" data-zone="player-spell-0"></div>
-          <div class="zone spell-trap-zone" data-zone="player-spell-1"></div>
-          <div class="zone spell-trap-zone" data-zone="player-spell-2"></div>
-          <div class="zone spell-trap-zone" data-zone="player-spell-3"></div>
-          <div class="zone spell-trap-zone" data-zone="player-spell-4"></div>
-          <div class="zone deck-zone" data-zone="player-deck"></div>
-        </div>
-
-        <div id="player-hand" class="hand-row player-hand"></div>
-
-        <div class="life-points life-points-player">
-          <span class="life-label">Du</span>
-          <span id="player-life">8000</span>
-        </div>
-
-        <div id="duel-log" class="duel-log"></div>
-
-        <button id="leave-duel-button">Duell verlassen</button>
-
-      </div>
-    </div>
-
-  </div>
-
+  <script src="js/screenLoader.js"></script>
   <script src="js/api.js"></script>
   <script src="js/deckBuilder.js"></script>
   <script src="js/opponents.js"></script>

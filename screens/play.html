@@ -1,0 +1,100 @@
+<div id="screen-play" class="hidden">
+
+  <div id="opponent-select-view" class="opponent-select">
+    <h2>Gegner waehlen</h2>
+    <div class="opponent-list">
+
+      <div class="opponent-card">
+        <h3>Anfaenger</h3>
+        <p>Schwierigkeit: Leicht</p>
+        <button class="challenge-button" data-difficulty="easy">Herausfordern</button>
+      </div>
+
+      <div class="opponent-card">
+        <h3>Fortgeschrittener</h3>
+        <p>Schwierigkeit: Mittel</p>
+        <button class="challenge-button" data-difficulty="medium">Herausfordern</button>
+      </div>
+
+      <div class="opponent-card">
+        <h3>Meister</h3>
+        <p>Schwierigkeit: Schwer</p>
+        <button class="challenge-button" data-difficulty="hard">Herausfordern</button>
+      </div>
+
+    </div>
+    <button data-target="screen-menu">Zurueck</button>
+  </div>
+
+  <div id="duel-board-view" class="duel-board hidden">
+
+    <div class="life-points life-points-opponent">
+      <span class="life-label">Gegner</span>
+      <span id="opponent-life">8000</span>
+    </div>
+
+    <div id="opponent-hand" class="hand-row opponent-hand"></div>
+
+    <div class="board-row">
+      <div class="zone deck-zone" data-zone="opponent-deck"></div>
+      <div class="zone spell-trap-zone" data-zone="opponent-spell-0"></div>
+      <div class="zone spell-trap-zone" data-zone="opponent-spell-1"></div>
+      <div class="zone spell-trap-zone" data-zone="opponent-spell-2"></div>
+      <div class="zone spell-trap-zone" data-zone="opponent-spell-3"></div>
+      <div class="zone spell-trap-zone" data-zone="opponent-spell-4"></div>
+      <div class="zone extra-deck-zone" data-zone="opponent-extra"></div>
+    </div>
+
+    <div class="board-row">
+      <div class="zone graveyard-zone" data-zone="opponent-graveyard"></div>
+      <div class="zone monster-zone" data-zone="opponent-monster-0"></div>
+      <div class="zone monster-zone" data-zone="opponent-monster-1"></div>
+      <div class="zone monster-zone" data-zone="opponent-monster-2"></div>
+      <div class="zone monster-zone" data-zone="opponent-monster-3"></div>
+      <div class="zone monster-zone" data-zone="opponent-monster-4"></div>
+      <div class="zone banished-zone" data-zone="opponent-banished"></div>
+    </div>
+
+    <div class="phase-bar">
+      <span class="phase-button" data-phase="draw">DP</span>
+      <span class="phase-button" data-phase="standby">SP</span>
+      <span class="phase-button" data-phase="main1">MP1</span>
+      <span class="phase-button" data-phase="battle">BP</span>
+      <span class="phase-button" data-phase="main2">MP2</span>
+      <span class="phase-button" data-phase="end">EP</span>
+    </div>
+
+    <div class="board-row">
+      <div class="zone banished-zone" data-zone="player-banished"></div>
+      <div class="zone monster-zone" data-zone="player-monster-0"></div>
+      <div class="zone monster-zone" data-zone="player-monster-1"></div>
+      <div class="zone monster-zone" data-zone="player-monster-2"></div>
+      <div class="zone monster-zone" data-zone="player-monster-3"></div>
+      <div class="zone monster-zone" data-zone="player-monster-4"></div>
+      <div class="zone graveyard-zone" data-zone="player-graveyard"></div>
+    </div>
+
+    <div class="board-row">
+      <div class="zone extra-deck-zone" data-zone="player-extra"></div>
+      <div class="zone spell-trap-zone" data-zone="player-spell-0"></div>
+      <div class="zone spell-trap-zone" data-zone="player-spell-1"></div>
+      <div class="zone spell-trap-zone" data-zone="player-spell-2"></div>
+      <div class="zone spell-trap-zone" data-zone="player-spell-3"></div>
+      <div class="zone spell-trap-zone" data-zone="player-spell-4"></div>
+      <div class="zone deck-zone" data-zone="player-deck"></div>
+    </div>
+
+    <div id="player-hand" class="hand-row player-hand"></div>
+
+    <div class="life-points life-points-player">
+      <span class="life-label">Du</span>
+      <span id="player-life">8000</span>
+    </div>
+
+    <div id="duel-log" class="duel-log"></div>
+
+    <button id="leave-duel-button">Duell verlassen</button>
+
+  </div>
+
+</div>
