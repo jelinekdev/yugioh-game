@@ -61,6 +61,7 @@ async function startDuel(difficulty) {
 
     renderHands();
     renderDeckZones();
+    renderField();
 
     const starterName = gameState.currentTurn === 'player' ? 'Du beginnst.' : 'Der Gegner beginnt.';
     duelLog.textContent = `Duell gegen ${OPPONENTS[difficulty].name} gestartet. ${starterName}`;
@@ -143,7 +144,6 @@ function handleDrawPhase() {
   renderHands();
 }
 
-
 function endTurn() {
   gameState.normalSummonUsed = false;
   gameState.turnCount += 1;
@@ -161,44 +161,6 @@ function renderPhaseBar() {
     button.classList.toggle('active', phase === gameState.currentPhase);
   });
 }
-
-function renderPlayerHand() {
-  const container = document.getElementById('player-hand');
-  container.innerHTML = '';
-
-  gameState.field.player.hand.forEach(card => {
-    const imageUrl = card.card_images?.[0]?.image_url_small;
-
-    const cardEl = document.createElement('div');
-    cardEl.className = 'hand-card card-enter';
-
-    const img = document.createElement('img');
-    img.src = imageUrl;
-    img.alt = card.name;
-    img.loading = 'lazy';
-
-    cardEl.appendChild(img);
-    container.appendChild(cardEl);
-  });
-}
-
-function renderOpponentHand() {
-  const container = document.getElementById('opponent-hand');
-  container.innerHTML = '';
-
-  gameState.field.opponent.hand.forEach(() => {
-    const cardEl = document.createElement('div');
-    cardEl.className = 'hand-card card-back card-enter';
-
-    const backImg = document.createElement('img');
-    backImg.src = 'assets/back_high.jpg';
-    backImg.alt = 'Kartenrueckseite';
-
-    cardEl.appendChild(backImg);
-    container.appendChild(cardEl);
-  });
-}
-
 
 function updatePhaseActionButtons() {
   const goToBattleButton = document.getElementById('go-to-battle-button');
@@ -236,11 +198,11 @@ function renderPlayerHand() {
   const container = document.getElementById('player-hand');
   container.innerHTML = '';
 
-  gameState.field.player.hand.forEach(card => {
+  gameState.field.player.hand.forEach((card, index) => {
     const imageUrl = card.card_images?.[0]?.image_url_small;
 
     const cardEl = document.createElement('div');
-    cardEl.className = 'hand-card';
+    cardEl.className = 'hand-card card-enter';
 
     const img = document.createElement('img');
     img.src = imageUrl;
@@ -248,6 +210,8 @@ function renderPlayerHand() {
     img.loading = 'lazy';
 
     cardEl.appendChild(img);
+    cardEl.addEventListener('click', (event) => onHandCardClick(card, index, event));
+
     container.appendChild(cardEl);
   });
 }
@@ -258,7 +222,7 @@ function renderOpponentHand() {
 
   gameState.field.opponent.hand.forEach(() => {
     const cardEl = document.createElement('div');
-    cardEl.className = 'hand-card card-back';
+    cardEl.className = 'hand-card card-back card-enter';
 
     const backImg = document.createElement('img');
     backImg.src = 'assets/back_high.jpg';
@@ -288,6 +252,51 @@ function renderDeckZone(zoneEl, cardCount) {
   img.src = 'assets/back_high.jpg';
   img.alt = 'Deck';
   img.className = 'deck-stack-image';
+
+  zoneEl.appendChild(img);
+}
+
+function renderField() {
+  renderFieldSide('player');
+  renderFieldSide('opponent');
+}
+
+function renderFieldSide(side) {
+  const monsters = gameState.field[side].monsters;
+  const spellsTraps = gameState.field[side].spellsTraps;
+
+  monsters.forEach((slot, index) => {
+    const zoneEl = document.querySelector(`[data-zone="${side}-monster-${index}"]`);
+    renderCardSlot(zoneEl, slot);
+  });
+
+  spellsTraps.forEach((slot, index) => {
+    const zoneEl = document.querySelector(`[data-zone="${side}-spell-${index}"]`);
+    renderCardSlot(zoneEl, slot);
+  });
+}
+
+function renderCardSlot(zoneEl, slot) {
+  zoneEl.innerHTML = '';
+
+  if (slot === null) {
+    return;
+  }
+
+  const img = document.createElement('img');
+  img.className = 'field-card-image';
+
+  if (slot.faceUp) {
+    img.src = slot.card.card_images?.[0]?.image_url_small;
+    img.alt = slot.card.name;
+  } else {
+    img.src = 'assets/back_high.jpg';
+    img.alt = 'Verdeckte Karte';
+  }
+
+  if (slot.battlePosition === 'defense') {
+    img.classList.add('field-card-defense');
+  }
 
   zoneEl.appendChild(img);
 }

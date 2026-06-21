@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   initDeckBuilder();
   initDuelScreen();
+  initCardActions();
 
   document.querySelectorAll('button[data-target]').forEach(button => {
     button.addEventListener('click', () => {
