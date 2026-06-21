@@ -256,3 +256,10 @@
   overflow-y: auto;
   line-height: 1.5;
 }
+.field-card-opponent {
+  transform: rotate(180deg);
+}
+
+.field-card-opponent.field-card-defense {
+  transform: rotate(90deg) scale(0.85);
+}

@@ -124,6 +124,11 @@ function setPhase(phase) {
     return;
   }
 
+  if (phase === 'main1' && gameState.currentTurn === 'opponent') {
+    setTimeout(() => runOpponentMainPhase(), 600);
+    return;
+  }
+
   if (phase === 'end') {
     setTimeout(() => endTurn(), 800);
   }
@@ -269,16 +274,16 @@ function renderFieldSide(side) {
 
   monsters.forEach((slot, index) => {
     const zoneEl = document.querySelector(`[data-zone="${side}-monster-${index}"]`);
-    renderCardSlot(zoneEl, slot);
+    renderCardSlot(zoneEl, slot, side);
   });
 
   spellsTraps.forEach((slot, index) => {
     const zoneEl = document.querySelector(`[data-zone="${side}-spell-${index}"]`);
-    renderCardSlot(zoneEl, slot);
+    renderCardSlot(zoneEl, slot, side);
   });
 }
 
-function renderCardSlot(zoneEl, slot) {
+function renderCardSlot(zoneEl, slot, side) {
   zoneEl.innerHTML = '';
 
   if (slot === null) {
@@ -300,6 +305,10 @@ function renderCardSlot(zoneEl, slot) {
 
   if (slot.battlePosition === 'defense') {
     img.classList.add('field-card-defense');
+  }
+
+  if (side === 'opponent') {
+    img.classList.add('field-card-opponent');
   }
 
   zoneEl.appendChild(img);
