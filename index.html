@@ -92,6 +92,8 @@
           <span id="opponent-life">8000</span>
         </div>
 
+        <div id="opponent-hand" class="hand-row opponent-hand"></div>
+
         <div class="board-row">
           <div class="zone deck-zone" data-zone="opponent-deck"></div>
           <div class="zone spell-trap-zone" data-zone="opponent-spell-0"></div>
@@ -141,25 +143,25 @@
           <div class="zone deck-zone" data-zone="player-deck"></div>
         </div>
 
+        <div id="player-hand" class="hand-row player-hand"></div>
+
         <div class="life-points life-points-player">
           <span class="life-label">Du</span>
           <span id="player-life">8000</span>
         </div>
 
-        <div id="opponent-hand" class="hand-row opponent-hand"></div>
         <div id="duel-log" class="duel-log"></div>
-        <div id="player-hand" class="hand-row player-hand"></div>
 
         <button id="leave-duel-button">Duell verlassen</button>
 
       </div>
-
     </div>
 
   </div>
 
   <script src="js/api.js"></script>
   <script src="js/deckBuilder.js"></script>
+  <script src="js/opponents.js"></script>
   <script src="js/duel.js"></script>
   <script src="js/ui.js"></script>
 </body>

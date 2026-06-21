@@ -25,3 +25,15 @@ async function getCardById(id) {
   const data = await response.json();
   return data.data?.[0] ?? null;
 }
+async function getCardsBySet(setName) {
+  const url = `${API_BASE_URL}/cardinfo.php?cardset=${encodeURIComponent(setName)}`;
+
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error(`API Fehler: ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data.data ?? [];
+}
