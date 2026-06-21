@@ -28,6 +28,16 @@
 
   <div id="duel-board-view" class="duel-board hidden">
 
+       <div id="duel-card-preview" class="duel-card-preview hidden">
+      <img id="duel-preview-image" src="" alt="">
+      <div class="duel-preview-info">
+        <h3 id="duel-preview-name"></h3>
+        <p id="duel-preview-type"></p>
+        <p id="duel-preview-atk-def"></p>
+        <p id="duel-preview-desc"></p>
+      </div>
+    </div>
+
     <div class="life-points life-points-opponent">
       <span class="life-label">Gegner</span>
       <span id="opponent-life">8000</span>
@@ -103,7 +113,7 @@
       <button id="action-set-spell" class="hidden">Setzen</button>
       <button id="action-cancel">Abbrechen</button>
     </div>
-    
+
     <div id="duel-log" class="duel-log"></div>
 
     <button id="leave-duel-button">Duell verlassen</button>

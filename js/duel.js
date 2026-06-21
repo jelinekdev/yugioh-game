@@ -211,6 +211,8 @@ function renderPlayerHand() {
 
     cardEl.appendChild(img);
     cardEl.addEventListener('click', (event) => onHandCardClick(card, index, event));
+    cardEl.addEventListener('mouseenter', () => showDuelCardPreview(card));
+    cardEl.addEventListener('mouseleave', hideDuelCardPreview);
 
     container.appendChild(cardEl);
   });
@@ -289,6 +291,8 @@ function renderCardSlot(zoneEl, slot) {
   if (slot.faceUp) {
     img.src = slot.card.card_images?.[0]?.image_url_small;
     img.alt = slot.card.name;
+    zoneEl.addEventListener('mouseenter', () => showDuelCardPreview(slot.card));
+    zoneEl.addEventListener('mouseleave', hideDuelCardPreview);
   } else {
     img.src = 'assets/back_high.jpg';
     img.alt = 'Verdeckte Karte';
@@ -304,4 +308,26 @@ function renderCardSlot(zoneEl, slot) {
 function leaveDuel() {
   document.getElementById('duel-board-view').classList.add('hidden');
   document.getElementById('opponent-select-view').classList.remove('hidden');
+}
+
+function showDuelCardPreview(card) {
+  const preview = document.getElementById('duel-card-preview');
+  const imageUrl = card.card_images?.[0]?.image_url;
+
+  document.getElementById('duel-preview-image').src = imageUrl;
+  document.getElementById('duel-preview-image').alt = card.name;
+  document.getElementById('duel-preview-name').textContent = card.name;
+  document.getElementById('duel-preview-type').textContent = `${card.type} / ${card.race}`;
+
+  const atkDef = card.atk !== undefined
+    ? `ATK: ${card.atk} / DEF: ${card.def ?? '-'}`
+    : '';
+  document.getElementById('duel-preview-atk-def').textContent = atkDef;
+  document.getElementById('duel-preview-desc').textContent = card.desc;
+
+  preview.classList.remove('hidden');
+}
+
+function hideDuelCardPreview() {
+  document.getElementById('duel-card-preview').classList.add('hidden');
 }
