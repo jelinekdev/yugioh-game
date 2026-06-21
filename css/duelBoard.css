@@ -263,3 +263,8 @@
 .field-card-opponent.field-card-defense {
   transform: rotate(90deg) scale(0.85);
 }
+
+.zone-tribute-selected {
+  border-color: #c85c5c !important;
+  background-color: rgba(200, 92, 92, 0.25) !important;
+}

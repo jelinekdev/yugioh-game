@@ -1,6 +1,8 @@
 let selectedHandCard = null;
 let selectedHandIndex = null;
 let pendingAction = null;
+let requiredTributes = 0;
+let selectedTributeIndexes = [];
 
 function canPlayCards() {
   if (gameState.currentTurn !== 'player') {
@@ -70,6 +72,8 @@ function closeCardActionMenu() {
   selectedHandCard = null;
   selectedHandIndex = null;
   pendingAction = null;
+  requiredTributes = 0;
+  selectedTributeIndexes = [];
   clearZoneSelection();
 }
 
@@ -77,11 +81,19 @@ function clearZoneSelection() {
   document.querySelectorAll('.zone-selectable').forEach(zone => {
     zone.classList.remove('zone-selectable');
   });
+  document.querySelectorAll('.zone-tribute-selected').forEach(zone => {
+    zone.classList.remove('zone-tribute-selected');
+  });
 }
 
 function startZoneSelection(action) {
   pendingAction = action;
   document.getElementById('card-action-menu').classList.add('hidden');
+
+  if ((action === 'summon' || action === 'set-monster') && getCardLevel(selectedHandCard) >= 5) {
+    startTributeSelection(action);
+    return;
+  }
 
   const side = 'player';
   let zoneSelector;
@@ -105,6 +117,35 @@ function startZoneSelection(action) {
   });
 }
 
+function startTributeSelection(action) {
+  const level = getCardLevel(selectedHandCard);
+  requiredTributes = level >= 7 ? 2 : 1;
+  selectedTributeIndexes = [];
+
+  const availableMonsters = gameState.field.player.monsters.filter(slot => slot !== null).length;
+
+  if (availableMonsters < requiredTributes) {
+    const duelLog = document.getElementById('duel-log');
+    duelLog.textContent = `Nicht genug Monster fuer ein Tributopfer (benoetigt: ${requiredTributes}).`;
+    closeCardActionMenu();
+    return;
+  }
+
+  pendingAction = `${action}-tribute`;
+
+  document.querySelectorAll('[data-zone^="player-monster"]').forEach(zone => {
+    const zoneName = zone.getAttribute('data-zone');
+    const zoneIndex = parseInt(zoneName.split('-').pop(), 10);
+
+    if (gameState.field.player.monsters[zoneIndex] !== null) {
+      zone.classList.add('zone-selectable');
+    }
+  });
+
+  const duelLog = document.getElementById('duel-log');
+  duelLog.textContent = `Waehle ${requiredTributes} Monster als Tributopfer.`;
+}
+
 function onZoneClick(zoneEl) {
   if (pendingAction === null || selectedHandCard === null) {
     return;
@@ -117,6 +158,11 @@ function onZoneClick(zoneEl) {
   const zoneName = zoneEl.getAttribute('data-zone');
   const zoneIndex = parseInt(zoneName.split('-').pop(), 10);
 
+  if (pendingAction === 'summon-tribute' || pendingAction === 'set-monster-tribute') {
+    handleTributeZoneClick(zoneIndex);
+    return;
+  }
+
   if (pendingAction === 'summon') {
     placeMonster(zoneIndex, 'attack', true);
   } else if (pendingAction === 'set-monster') {
@@ -125,6 +171,41 @@ function onZoneClick(zoneEl) {
     activateSpell(zoneIndex);
   } else if (pendingAction === 'set-spell') {
     setSpellOrTrap(zoneIndex);
+  }
+
+  closeCardActionMenu();
+}
+
+function handleTributeZoneClick(zoneIndex) {
+  if (selectedTributeIndexes.includes(zoneIndex)) {
+    return;
+  }
+
+  selectedTributeIndexes.push(zoneIndex);
+
+  const zoneEl = document.querySelector(`[data-zone="player-monster-${zoneIndex}"]`);
+  zoneEl.classList.remove('zone-selectable');
+  zoneEl.classList.add('zone-tribute-selected');
+
+  if (selectedTributeIndexes.length < requiredTributes) {
+    return;
+  }
+
+  const baseAction = pendingAction.replace('-tribute', '');
+  const targetZoneIndex = selectedTributeIndexes[0];
+
+  selectedTributeIndexes.forEach(index => {
+    gameState.field.player.monsters[index] = null;
+  });
+
+  document.querySelectorAll('.zone-tribute-selected').forEach(zone => {
+    zone.classList.remove('zone-tribute-selected');
+  });
+
+  if (baseAction === 'summon') {
+    placeMonster(targetZoneIndex, 'attack', true);
+  } else {
+    placeMonster(targetZoneIndex, 'defense', false);
   }
 
   closeCardActionMenu();
