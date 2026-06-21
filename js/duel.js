@@ -53,9 +53,6 @@ async function startDuel(difficulty) {
     gameState.field.player.deck = shuffleDeck(loadedPlayerDeck);
     gameState.field.opponent.deck = shuffleDeck(loadedOpponentDeck);
 
-    gameState.field.player.hand = drawCards(gameState.field.player.deck, 5);
-    gameState.field.opponent.hand = drawCards(gameState.field.opponent.deck, 5);
-
     gameState.currentTurn = Math.random() < 0.5 ? 'player' : 'opponent';
     gameState.turnCount = 1;
 
@@ -68,12 +65,46 @@ async function startDuel(difficulty) {
     const starterName = gameState.currentTurn === 'player' ? 'Du beginnst.' : 'Der Gegner beginnt.';
     duelLog.textContent = `Duell gegen ${OPPONENTS[difficulty].name} gestartet. ${starterName}`;
 
+    await dealStartingHands();
+
     const startPhase = gameState.turnCount === 1 ? 'standby' : 'draw';
     setPhase(startPhase);
 
   } catch (error) {
     duelLog.textContent = 'Fehler beim Laden der Decks.';
   }
+}
+
+function dealStartingHands() {
+  const playerDraws = dealHandForSide('player');
+  const opponentDraws = dealHandForSide('opponent');
+
+  return Promise.all([playerDraws, opponentDraws]);
+}
+
+function dealHandForSide(side) {
+  return new Promise(resolve => {
+    let drawsLeft = 5;
+
+    function drawNext() {
+      if (drawsLeft === 0) {
+        resolve();
+        return;
+      }
+
+      const activeState = gameState.field[side];
+      const drawn = drawCards(activeState.deck, 1);
+      activeState.hand.push(...drawn);
+
+      renderDeckZones();
+      renderHands();
+
+      drawsLeft -= 1;
+      setTimeout(drawNext, 150);
+    }
+
+    drawNext();
+  });
 }
 
 function setPhase(phase) {
@@ -108,9 +139,10 @@ function handleDrawPhase() {
   }
 
   activeState.hand.push(...drawn);
-  renderHands();
   renderDeckZones();
+  renderHands();
 }
+
 
 function endTurn() {
   gameState.normalSummonUsed = false;
@@ -129,6 +161,44 @@ function renderPhaseBar() {
     button.classList.toggle('active', phase === gameState.currentPhase);
   });
 }
+
+function renderPlayerHand() {
+  const container = document.getElementById('player-hand');
+  container.innerHTML = '';
+
+  gameState.field.player.hand.forEach(card => {
+    const imageUrl = card.card_images?.[0]?.image_url_small;
+
+    const cardEl = document.createElement('div');
+    cardEl.className = 'hand-card card-enter';
+
+    const img = document.createElement('img');
+    img.src = imageUrl;
+    img.alt = card.name;
+    img.loading = 'lazy';
+
+    cardEl.appendChild(img);
+    container.appendChild(cardEl);
+  });
+}
+
+function renderOpponentHand() {
+  const container = document.getElementById('opponent-hand');
+  container.innerHTML = '';
+
+  gameState.field.opponent.hand.forEach(() => {
+    const cardEl = document.createElement('div');
+    cardEl.className = 'hand-card card-back card-enter';
+
+    const backImg = document.createElement('img');
+    backImg.src = 'assets/back_high.jpg';
+    backImg.alt = 'Kartenrueckseite';
+
+    cardEl.appendChild(backImg);
+    container.appendChild(cardEl);
+  });
+}
+
 
 function updatePhaseActionButtons() {
   const goToBattleButton = document.getElementById('go-to-battle-button');
